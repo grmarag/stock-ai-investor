@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Stock AI Investor{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Market Overview & LLM Recommendations</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Current Price</th>
+            <th>Recommendation</th>
+            <th>Explanation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for symbol, data in recommendations.items() %}
+        <tr>
+            <td>{{ symbol }}</td>
+            {% if data is string %}
+                <td colspan="3">{{ data }}</td>
+            {% else %}
+                <td>${{ "%.2f"|format(data.current_price) }}</td>
+                <td>{{ data.recommendation }}</td>
+                <td>{{ data.explanation }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
